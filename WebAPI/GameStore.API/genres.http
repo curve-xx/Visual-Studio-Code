@@ -1,0 +1,4 @@
+@MyWebAPI_HostAddress = http://localhost:5158
+
+GET {{MyWebAPI_HostAddress}}/genres
+Accept: application/json

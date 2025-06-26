@@ -1,0 +1,33 @@
+@MyWebAPI_HostAddress = http://localhost:5158
+
+GET {{MyWebAPI_HostAddress}}/games
+Accept: application/json
+
+###
+GET {{MyWebAPI_HostAddress}}/games/1
+Accept: application/json
+
+###
+POST {{MyWebAPI_HostAddress}}/games
+Content-Type: application/json
+
+{
+    "Name": "Final Fantasy XIV",
+    "GenreId": 2,
+    "Price": 59.99,
+    "ReleaseDate": "2010-09-30"
+}
+
+###
+PUT {{MyWebAPI_HostAddress}}/games/1
+Content-Type: application/json
+
+{
+    "Name": "Street Fighter II Turbo",
+    "GenreId": 1,
+    "Price": 9.99,
+    "ReleaseDate": "1991-02-01"
+}
+
+###
+DELETE {{MyWebAPI_HostAddress}}/games/2
