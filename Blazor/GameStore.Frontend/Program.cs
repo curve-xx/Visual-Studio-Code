@@ -6,8 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
-builder.Services.AddSingleton<GamesClient>();
-builder.Services.AddSingleton<GenresClient>();
+
+var gameStoreAPIUrl = builder.Configuration["GameStoreApiUrl"] ?? throw new Exception("GameStore API URL is missing.");
+
+builder.Services.AddHttpClient<GamesClient>(client =>
+    client.BaseAddress = new Uri(gameStoreAPIUrl));
+
+builder.Services.AddHttpClient<GenresClient>(client =>
+    client.BaseAddress = new Uri(gameStoreAPIUrl));
 
 var app = builder.Build();
 

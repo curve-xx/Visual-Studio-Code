@@ -2,8 +2,12 @@ using GameStore.Frontend.Models;
 
 namespace GameStore.Frontend.Clients;
 
-public class GenresClient
+public class GenresClient(HttpClient httpClient)
 {
+    public async Task<Genre[]> GetGenresAsync()
+    => await httpClient.GetFromJsonAsync<Genre[]>("genres") ?? [];
+
+    // Mock data for demonstration purposes
     private readonly Genre[] genres =
     [
         new () {
@@ -27,6 +31,4 @@ public class GenresClient
             Name = "Kids & Family"
         }
     ];
-
-    public Genre[] GetGenres() => genres;
 }

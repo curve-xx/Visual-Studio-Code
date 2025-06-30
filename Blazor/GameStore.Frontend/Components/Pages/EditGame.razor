@@ -15,7 +15,7 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm Model="@game" FormName="editGame" OnValidSubmit="HandleSubmit">
+            <EditForm Model="@game" FormName="editGame" OnValidSubmit="HandleSubmitAsync" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div class="mb-3">
@@ -68,18 +68,18 @@ else
 
     private string title { get; set; } = string.Empty;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         if (game is not null)
         {
             return; // If game is already set, no need to fetch again
         }
 
-        if (Id.HasValue || game is null)
+        if (Id.HasValue)
         {
             // Fetch game details if Id is provided
 
-            var gameResult = gamesClient.GetGameDetails(Id!.Value);
+            var gameResult = await gamesClient.GetGameDetailsAsync(Id!.Value);
             if (gameResult is not null)
             {
                 game = gameResult;
@@ -102,23 +102,23 @@ else
         }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        genres = genresClient.GetGenres();
+        genres = await genresClient.GetGenresAsync();
     }
 
-    private void HandleSubmit()
+    private async Task HandleSubmitAsync()
     {
         ArgumentNullException.ThrowIfNull(game, nameof(game));
         // Logic to handle form submission, e.g., saving the game details
         if (Id is null)
         {
-            gamesClient.AddGame(game);
+            await gamesClient.AddGameAsync(game);
         }
         else
         {
             game.Id = Id.Value; // Ensure the game ID is set for updates
-            gamesClient.UpdateGame(game);
+            await gamesClient.UpdateGameAsync(game);
         }
         // Navigate back to the home page or game list after saving
         NavigationManager.NavigateTo("/");

@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using GameStore.Frontend.Converters;
 
 namespace GameStore.Frontend.Models;
 
@@ -11,7 +13,8 @@ public class GameDetails
     public required string Name { get; set; }
 
     [Required(ErrorMessage = "Genre is required.")]
-    public required string GenreId { get; set; }
+    [JsonConverter(typeof(StringConverter))]
+    public required string? GenreId { get; set; }
 
     [Range(1, 100, ErrorMessage = "Price must be between 1 and 100.")]
     public decimal Price { get; set; }
