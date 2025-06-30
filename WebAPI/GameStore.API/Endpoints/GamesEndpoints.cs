@@ -8,6 +8,7 @@ namespace GameStore.API.Endpoints;
 
 public static class GamesEndpoints
 {
+    // Sample game data
     private static readonly List<GameSummaryDto> games = [
             new (
             1,
@@ -38,11 +39,14 @@ public static class GamesEndpoints
 
         // GET /games
         group.MapGet("/", async (GameStoreContext context) =>
-            await context.Games
+        {
+            await Task.Delay(3000); // Simulate some delay for demonstration purposes
+            return await context.Games
                     .Include(g => g.Genre)
                     .Select(g => g.ToGameSummaryDto())
                     .AsNoTracking()
-                    .ToListAsync());
+                    .ToListAsync();
+        });
 
         // GET /games/{id}
         group.MapGet("/{id:int}", async (int id, GameStoreContext context) =>
