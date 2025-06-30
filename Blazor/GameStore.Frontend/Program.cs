@@ -1,9 +1,13 @@
+using GameStore.Frontend.Clients;
 using GameStore.Frontend.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents();
+builder.Services.AddSingleton<GamesClient>();
+builder.Services.AddSingleton<GenresClient>();
 
 var app = builder.Build();
 
@@ -17,9 +21,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapStaticAssets();
 app.UseAntiforgery();
 
-app.MapStaticAssets();
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();
