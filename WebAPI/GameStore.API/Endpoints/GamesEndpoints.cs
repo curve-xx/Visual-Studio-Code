@@ -2,37 +2,13 @@ using GameStore.API.Data;
 using GameStore.API.Dtos;
 using GameStore.API.Entities;
 using GameStore.API.Mapping;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.API.Endpoints;
 
 public static class GamesEndpoints
 {
-    // Sample game data
-    private static readonly List<GameSummaryDto> games = [
-            new (
-            1,
-            "Street Fighter II",
-            "Fighting",
-            19.99M,
-            new DateOnly(1992, 7, 15)
-        ),
-        new (
-            2,
-            "Final Fantasy XIV",
-            "Roleplaying",
-            59.99M,
-            new DateOnly(2010, 9, 30)
-        ),
-        new (
-            3,
-            "FIFA 23",
-            "Sports",
-            69.99M,
-            new DateOnly(2022, 9, 27)
-        ),
-    ];
-
     public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/games").WithParameterValidation();
@@ -102,4 +78,29 @@ public static class GamesEndpoints
 
         return group;
     }
+
+    // Sample game data
+    private static readonly List<GameSummaryDto> games = [
+            new (
+            1,
+            "Street Fighter II",
+            "Fighting",
+            19.99M,
+            new DateOnly(1992, 7, 15)
+        ),
+        new (
+            2,
+            "Final Fantasy XIV",
+            "Roleplaying",
+            59.99M,
+            new DateOnly(2010, 9, 30)
+        ),
+        new (
+            3,
+            "FIFA 23",
+            "Sports",
+            69.99M,
+            new DateOnly(2022, 9, 27)
+        ),
+    ];
 }
