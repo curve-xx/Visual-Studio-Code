@@ -11,11 +11,6 @@ public class TreasureChest
 
     public bool CanOpen(bool hasKey)
     {
-        if (IsLocked && !hasKey)
-        {
-            return false;
-        }
-
-        return true;
+        return !IsLocked || hasKey;
     }
 }
